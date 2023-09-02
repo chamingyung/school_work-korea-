@@ -1,6 +1,6 @@
 food = {
     'candy' : {'sugar', 'butter'},
-    'bread' : {'wheat', 'egg', 'sugar', 'milk', 'bitter'},
+    'bread' : {'wheat', 'egg', 'sugar', 'milk', 'butter'},
     'latte' : {'milk', 'caffee'},
     'pizza' : {'wheat', 'tomato', 'onion', 'salt', 'butter'},
     'lemontea' : {'lemon'},
