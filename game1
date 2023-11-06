@@ -1,0 +1,22 @@
+# 기본 틀 생성
+
+import pygame as pg
+
+pg.init()
+screen_width = 1280
+screen_height = 720
+screen = pg.display.set_mode((screen_width,screen_height))
+pg.display.set_caption("gold miner")
+
+clock = pg.time.Clock()   
+
+running = True
+while (         ):
+    clock.tick(30)  # FPS 값이 30으로 고정
+    for event in pg.event.get():
+        if event.type == pg.QUIT :
+            running = (         )
+
+pg.quit()     # 게임 종료
+
+
