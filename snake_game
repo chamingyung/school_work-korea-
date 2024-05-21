@@ -1,0 +1,134 @@
+import pygame
+import time
+import random
+
+# 초기화
+pygame.init()
+
+# 화면 설정
+width, height = 800, 600
+game_display = pygame.display.set_mode((width, height)) # 스크린 가로,세로 길이
+pygame.display.set_caption("뱀 게임") # 게임제목
+
+# 색깔 정의
+white = (255, 255, 255)
+black = (0, 0, 0)
+red = (255, 0, 0)
+
+# 게임폰트
+font = pygame.font.SysFont(None, 25)
+
+# 뱀 초기 위치 및 크기 설정
+snake_block = 10 # 뱀 몸통 한 칸 정사각형 길이
+snake_speed = 10 # 뱀 속도
+
+# 뱀 몸통 그리기 함수
+def our_snake(snake_block, snake_list):
+    for x in snake_list:
+        pygame.draw.rect(game_display, white, [x[0], x[1], snake_block, snake_block])
+
+# 메시지 출력 옵션 정하기 함수
+def message(msg, color):
+    mesg = font.render(msg, True, color)
+    game_display.blit(mesg, [width / 6, height / 3])
+
+def game_loop():
+    game_over = False
+    game_close = False
+
+    # x1, y1 : 최초 뱀머리 좌표
+    x1 = width / 2
+    y1 = height / 2
+
+    # 뱀의 초기 방향은 오른쪽으로 이동
+    x1_change = 0
+    y1_change = 0
+
+    # 뱀 몸통 리스트
+    snake_list = []
+    length_of_snake = 1
+
+    # 먹이 최초 위치 랜덤세팅
+    foodx = round(random.randrange(0, width - snake_block) / 10.0) * 10.0
+    foody = round(random.randrange(0, height - snake_block) / 10.0) * 10.0
+
+    # 게임 실행 루프
+    while not game_over:
+        # 게임종료시 메시지
+        while game_close:
+            game_display.fill(black)
+            message("Game Over! Press C to Restart or Q to Quit", red)
+            pygame.display.update()
+            
+            # 게임종료 또는 재시작 제어
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_q:
+                        game_over = True
+                        game_close = False
+                    if event.key == pygame.K_c:
+                        game_loop()
+
+        # 키보드 이벤트 처리
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_over = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT and x1_change == 0:
+                    x1_change = -snake_block
+                    y1_change = 0
+                elif event.key == pygame.K_RIGHT and x1_change == 0:
+                    x1_change = snake_block
+                    y1_change = 0
+                elif event.key == pygame.K_UP and y1_change == 0:
+                    y1_change = -snake_block
+                    x1_change = 0
+                elif event.key == pygame.K_DOWN and y1_change == 0:
+                    y1_change = snake_block
+                    x1_change = 0
+
+        # 뱀이 화면 밖으로 탈출하면 게임 종료 
+        if x1 >= width or x1 < 0 or y1 >= height or y1 < 0:
+            game_close = True
+
+        # 뱀 위치 초기화
+        x1 += x1_change
+        y1 += y1_change
+
+        # 화면 까맣게
+        game_display.fill(black)
+
+        # 먹이 그리기
+        pygame.draw.rect(game_display, red, [foodx, foody, snake_block, snake_block])
+        
+        # 뱀 머리 좌표를 몸통에 추가 --- (1)
+        snake_head = [x1, y1]
+        snake_list.append(snake_head)
+
+        # 뱀머리가 추가되었으니 뱀꼬리 자르기  ---(2)   // (1),(2)를 통해 뱀 몸통이 실시간 업데이트됨.
+        if len(snake_list) > length_of_snake:
+            del snake_list[0]
+
+        # 뱀 머리가 몸통에 닿으면 게임종료
+
+        # 뱀 몸통 그리기
+        our_snake(snake_block, snake_list)
+
+        # 점수 메시지 송출
+
+
+        # 화면 업데이트
+        pygame.display.update()
+
+        # 먹이 먹으면 몸통 길이 1 올리기
+
+
+        # 속도제어
+        pygame.time.Clock().tick(snake_speed)
+
+    # 게임종료
+    pygame.quit()
+    quit()
+
+# 게임 시작
+game_loop()
