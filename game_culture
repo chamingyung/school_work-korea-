@@ -1,0 +1,40 @@
+import random  # 랜덤 기능을 하는 패키지 임포트
+import time  # 시간 관련 기능을 하는 패키지 임포트
+
+# 문명 속 날짜 설정
+day = 0
+
+# 얻을 수 있는 아이템들
+items = ['물', '수렵', '채집', '청동기', '철']
+
+# 유저가 얻은 아이템
+items_got = []
+
+## 매일 하나의 아이템을 얻을 때마다 아래 반복
+## 물,수렵,채집 -> 문명1단계(선사시대), 청동기 -> 문명2단계(청동기시대), 철 -> 문명3단계(철기시대)
+
+# 문명 1단계 코드 구현
+while True :
+    time.sleep(1)
+    day += 1
+    k = random.randint(0, 2)
+    items_got.append(items[k])
+    print(day,"일째", "보유아이템:",items_got)
+    if '물' in items_got and '수렵' in items_got and '채집' in items_got :
+        print(day,"일째 ","문명 1단계(선사시대) 진입.", "현재 보유 아이템:", set(items_got))
+        break
+
+time.sleep(3)
+
+# 문명 2단계 코드 구현
+while True :
+    time.sleep(1)
+    day += 1
+    k = random.randint(0,3)
+    items_got.append(items[k])
+    print(day, "일째", "보유아이템:", items_got)
+    if '청동기' in items_got:
+        print(day, "일째 ", "문명 2단계(선사시대) 진입.", "현재 보유 아이템:", set(items_got))
+        break
+
+
