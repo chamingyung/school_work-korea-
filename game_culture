@@ -34,7 +34,7 @@ while True :
     items_got.append(items[k])
     print(day, "일째", "보유아이템:", items_got)
     if '청동기' in items_got:
-        print(day, "일째 ", "문명 2단계(선사시대) 진입.", "현재 보유 아이템:", set(items_got))
+        print(day, "일째 ", "문명 2단계(청동기시대) 진입.", "현재 보유 아이템:", set(items_got))
         break
 
 
